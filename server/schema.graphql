@@ -1,0 +1,117 @@
+# Queries:
+type Query {
+  company(id: ID!): Company
+  job(id: ID!): Job
+  jobs(limit: Int, offset: Int): JobsSubList
+}
+
+"""
+Represents the company, that posted the job ad to the site.
+"""
+type Company {
+  """
+  Company __ID__.
+  """
+  id: ID!
+  """
+  Company __name__.
+  """
+  name: String!
+  """
+  Company __description__.
+  """
+  description: String
+  """
+  __Job openings__ posted by the company.
+  """
+  jobs: [Job!]
+}
+
+"""
+Represents a subset of all job ads, while providing the total count of all jobs posted to the site.
+"""
+type JobsSubList {
+  """
+  __Partial__ list of __job openings__ posted by the company (array).
+  """
+  items: [Job!]!
+  """
+  __Total__ number of __job openings__ posted by the company (Int).
+  """
+  totalCount: Int!
+}
+
+"""
+Represents a job ad, posted to the site.
+""" # This comment won't be displayed in the documentation.
+type Job {
+  """
+  Job __ID__.
+  """
+  id: ID!
+  """
+  The __date__, when the job was published, in __ISO-8601__ format.
+  """
+  date: String!
+  """
+  Job __title__.
+  """
+  title: String!
+  """
+  The company, that posted the job ad.
+  """
+  company: Company!
+  """
+  Job __description__.
+  """
+  description: String
+}
+
+# Mutations:
+type Mutation {
+  createJob(input: CreateJobInput!): Job
+  updateJob(input: UpdateJobInput!): Job
+  deleteJob(input: DeleteJobInput!): Job
+}
+
+"""
+Represents the type of the __input argument__ for the __createJob mutation__.
+"""
+input CreateJobInput {
+  """
+  __Title__ of a new job.
+  """
+  title: String
+  """
+  __Description__ of a new job.
+  """
+  description: String
+}
+
+"""
+Represents the type of the __input argument__ for the __updateJob mutation__.
+"""
+input UpdateJobInput {
+  """
+  __ID__ of a job to update.
+  """
+  id: ID!
+  """
+  __Title__ of a new job.
+  """
+  title: String!
+  """
+  __Description__ of a new job.
+  """
+  description: String
+}
+
+"""
+Represents the type of the __input argument__ for the __deleteJob mutation__.
+"""
+input DeleteJobInput {
+  """
+  __ID__ of a job to delete.
+  """
+  id: ID!
+}
